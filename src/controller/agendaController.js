@@ -1,6 +1,23 @@
-const app = require('./src/app');
-const PORT = 8080;
+const { response } = require('../app')
+const agendaCollection = require('../models/agendaSchema')
 
-app.listen(PORT, () => {
-    console.log(`Servidorzinho maravilhoso rodando em http://localhost:${PORT}`)
-});
+const getAll = (request,response) => {
+    console.log(request.url);
+
+
+    agendaCollection.find((error,contatos) => {
+        if(error){
+            return response.status(500).send(error)
+        }else{
+            return response.status(200).json({
+                mensagem: "Tudo certo com o GET",
+                contatos
+            })
+        }
+    })
+}
+
+
+module.exports = {
+    getAll,
+}
